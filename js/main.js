@@ -6,7 +6,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     initActiveNavTracker();
-    initContactForm();
 });
 
 /**
@@ -109,54 +108,4 @@ function initActiveNavTracker() {
         
         heroObserver.observe(heroSection);
     }
-}
-
-/**
- * 3. Contact Form Interactivity & Simulated Submission
- */
-function initContactForm() {
-    const form = document.getElementById('contact-form');
-    const status = document.getElementById('form-status');
-    
-    if (!form || !status) return;
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const nameInput = document.getElementById('form-name');
-        const emailInput = document.getElementById('form-email');
-        const messageInput = document.getElementById('form-message');
-        const submitButton = form.querySelector('.btn-submit');
-        const submitText = submitButton.querySelector('span');
-        
-        // Visual loading state
-        submitButton.disabled = true;
-        const originalText = submitText.textContent;
-        submitText.textContent = 'Sending...';
-        
-        // Simulate network API delay
-        setTimeout(() => {
-            submitButton.disabled = false;
-            submitText.textContent = originalText;
-            
-            // Standard success scenario
-            status.className = 'form-status success';
-            status.style.display = 'block';
-            status.textContent = `Thanks, ${nameInput.value}. Your message has been sent successfully.`;
-            
-            // Reset input values
-            form.reset();
-            
-            // Fade out status message after 6 seconds
-            setTimeout(() => {
-                status.style.opacity = '0';
-                status.style.transition = 'opacity 0.5s ease';
-                setTimeout(() => {
-                    status.style.display = 'none';
-                    status.style.opacity = '1';
-                }, 500);
-            }, 6000);
-            
-        }, 1200);
-    });
 }
